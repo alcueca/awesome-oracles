@@ -25,9 +25,9 @@ This specification provides a standard API aimed to serve the majority of use ca
 #### valueOf
 Returns the value of `baseAmount` of `baseAsset` in `quoteAsset` terms.
 
-MUST revert if not capable to provide data for the specified `baseAsset` and `quoteAsset` pair.
+MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `baseAsset` and `quoteAsset` pair.
 
-MUST revert if not capable to provide data within a degree of confidence publicly specified.
+MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly specified.
 
 ```yaml
 - name: valueOf
@@ -50,7 +50,9 @@ MUST revert if not capable to provide data within a degree of confidence publicl
 #### priceOf
 Returns the value of one `whole unit` of `baseAsset` in `quoteAsset` terms, as a fixed point value with 18 decimals.
 
-MUST revert if not capable to provide data within a degree of confidence publicly specified.
+MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `baseAsset` and `quoteAsset` pair.
+
+MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly specified.
 
 ```yaml
 - name: priceOf
@@ -79,6 +81,36 @@ For assets without an address, but with an ISO 4217 code, the code will be used 
 
 ### Events
 There are no events defined in this specification
+
+### Errors
+
+#### OracleUnsupportedPair
+```yaml
+- name: OracleUnsupportedPair
+  type: event
+
+  inputs:
+    - name: base
+      indexed: true
+      type: address
+    - name: quote
+      indexed: true
+      type: address
+```
+
+#### OracleUntrustedData
+```yaml
+- name: OracleUnsupportedPair
+  type: event
+
+  inputs:
+    - name: base
+      indexed: true
+      type: address
+    - name: quote
+      indexed: true
+      type: address
+```
 
 ### Rationale
 The presence of a `decimals` field in assets is intended to ease the representation of large asset amounts by defining a larger `whole unit`.
