@@ -2,6 +2,8 @@
 src = "src"
 out = "out"
 libs = ["lib"]
+verbosity = 3
+solc_version = '0.8.20'
 
 # Testing
 block_number = 19482218
