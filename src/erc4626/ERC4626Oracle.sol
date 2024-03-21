@@ -27,9 +27,9 @@ contract ERC4626Oracle {
 
     function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice) {
         if (quote == address(VAULT) && base == ASSET) {
-            return VAULT.convertToShares(10 ** IERC20(base).decimals());
+            return VAULT.convertToShares(10 ** IERC20(ASSET).decimals());
         } else if (quote == ASSET && base == address(VAULT)) {
-            return VAULT.convertToAssets(10 ** IERC20(quote).decimals());
+            return VAULT.convertToAssets(10 ** VAULT.decimals());
         } else {
             revert OracleUnsupportedPair();
         }
