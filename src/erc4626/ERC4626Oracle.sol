@@ -4,7 +4,11 @@ pragma solidity ^0.8.20;
 import {IERC20} from "../interfaces/IERC20.sol";
 import {IERC4626} from "../interfaces/IERC4626.sol";
 
+import {BoringERC20} from "../libraries/BoringERC20.sol";
+
 contract ERC4626Oracle {
+    using BoringERC20 for IERC20;
+
     error OracleUnsupportedPair();
 
     IERC4626 public immutable VAULT;
@@ -15,10 +19,10 @@ contract ERC4626Oracle {
 
     constructor(address _vault) {
         VAULT = IERC4626(_vault);
-        VAULT_SCALAR = 10 ** VAULT.decimals();
+        VAULT_SCALAR = 10 ** IERC20(_vault).safeDecimals();
 
         ASSET = IERC20(VAULT.asset());
-        ASSET_SCALAR = 10 ** ASSET.decimals();
+        ASSET_SCALAR = 10 ** ASSET.safeDecimals();
     }
 
     function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount) {
