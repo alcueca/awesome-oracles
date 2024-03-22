@@ -16,9 +16,9 @@ contract ERC4626Oracle {
     }
 
     function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount) {
-        if (quote == address(VAULT) && base == address(ASSET)) {
+        if (base == address(ASSET) && quote == address(VAULT)) {
             return VAULT.convertToShares(baseAmount);
-        } else if (quote == address(ASSET) && base == address(VAULT)) {
+        } else if (base == address(VAULT) && quote == address(ASSET)) {
             return VAULT.convertToAssets(baseAmount);
         } else {
             revert OracleUnsupportedPair();
@@ -26,9 +26,9 @@ contract ERC4626Oracle {
     }
 
     function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice) {
-        if (quote == address(VAULT) && base == address(ASSET)) {
+        if (base == address(ASSET) && quote == address(VAULT)) {
             return VAULT.convertToShares(10 ** IERC20(ASSET).decimals());
-        } else if (quote == address(ASSET) && base == address(VAULT)) {
+        } else if (base == address(VAULT) && quote == address(ASSET)) {
             return VAULT.convertToAssets(10 ** VAULT.decimals());
         } else {
             revert OracleUnsupportedPair();
