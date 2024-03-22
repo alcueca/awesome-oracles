@@ -8,11 +8,17 @@ contract ERC4626Oracle {
     error OracleUnsupportedPair();
 
     IERC4626 public immutable VAULT;
+    uint256 public immutable VAULT_SCALAR;
+
     IERC20 public immutable ASSET;
+    uint256 public immutable ASSET_SCALAR;
 
     constructor(address _vault) {
         VAULT = IERC4626(_vault);
+        VAULT_SCALAR = 10 ** VAULT.decimals();
+
         ASSET = IERC20(VAULT.asset());
+        ASSET_SCALAR = 10 ** ASSET.decimals();
     }
 
     function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount) {
@@ -27,9 +33,9 @@ contract ERC4626Oracle {
 
     function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice) {
         if (base == address(ASSET) && quote == address(VAULT)) {
-            return VAULT.convertToShares(10 ** IERC20(ASSET).decimals());
+            return (VAULT.convertToShares(ASSET_SCALAR) * 1e18) / VAULT_SCALAR;
         } else if (base == address(VAULT) && quote == address(ASSET)) {
-            return VAULT.convertToAssets(10 ** VAULT.decimals());
+            return (VAULT.convertToAssets(VAULT_SCALAR) * 1e18) / ASSET_SCALAR;
         } else {
             revert OracleUnsupportedPair();
         }
