@@ -6,4 +6,8 @@ verbosity = 3
 solc_version = '0.8.20'
 
 # Testing
-block_number = 19482218
+block_number = 19493590 # Mar-22-2024 11:59:59 PM UTC
+
+# Define RPC urls as RPC_{ChainID}
+[rpc_endpoints]
+mainnet = "${RPC_1}" 
