@@ -77,25 +77,25 @@ contract ERC4626OracleTest is Test {
         assertEq(yWethOracle.priceOf(WETH, yWETH), WETH_yWETH);
     }
 
-    function testValueOfShares(uint256 amt) public view {
+    function testValueOfShares(uint256 daiAmt, uint256 usdcAmt, uint256 wethAmt) public view {
         // value of vault share tokens in terms of underlying tokens
-        vm.assume(amt <= IERC4626(yDAI).totalSupply());
-        vm.assume(amt <= IERC4626(yUSDC).totalSupply());
-        vm.assume(amt <= IERC4626(yWETH).totalSupply());
+        vm.assume(daiAmt <= IERC4626(yDAI).totalSupply());
+        vm.assume(usdcAmt <= IERC4626(yUSDC).totalSupply());
+        vm.assume(wethAmt <= IERC4626(yWETH).totalSupply());
 
-        assertEq(yDaiOracle.valueOf(yDAI, DAI, amt), IERC4626(yDAI).convertToAssets(amt));
-        assertEq(yUsdcOracle.valueOf(yUSDC, USDC, amt), IERC4626(yUSDC).convertToAssets(amt));
-        assertEq(yWethOracle.valueOf(yWETH, WETH, amt), IERC4626(yWETH).convertToAssets(amt));
+        assertEq(yDaiOracle.valueOf(yDAI, DAI, daiAmt), IERC4626(yDAI).convertToAssets(daiAmt));
+        assertEq(yUsdcOracle.valueOf(yUSDC, USDC, usdcAmt), IERC4626(yUSDC).convertToAssets(usdcAmt));
+        assertEq(yWethOracle.valueOf(yWETH, WETH, wethAmt), IERC4626(yWETH).convertToAssets(wethAmt));
     }
 
-    function testValueOfAssets(uint256 amt) public view {
+    function testValueOfAssets(uint256 daiAmt, uint256 usdcAmt, uint256 wethAmt) public view {
         // value of underlying tokens in terms of vault share tokens
-        vm.assume(amt <= IERC4626(yDAI).totalAssets());
-        vm.assume(amt <= IERC4626(yUSDC).totalAssets());
-        vm.assume(amt <= IERC4626(yWETH).totalAssets());
+        vm.assume(daiAmt <= IERC4626(yDAI).totalAssets());
+        vm.assume(usdcAmt <= IERC4626(yUSDC).totalAssets());
+        vm.assume(wethAmt <= IERC4626(yWETH).totalAssets());
 
-        assertEq(yDaiOracle.valueOf(yDAI, DAI, amt), IERC4626(yDAI).convertToAssets(amt));
-        assertEq(yUsdcOracle.valueOf(yUSDC, USDC, amt), IERC4626(yUSDC).convertToAssets(amt));
-        assertEq(yWethOracle.valueOf(yWETH, WETH, amt), IERC4626(yWETH).convertToAssets(amt));
+        assertEq(yDaiOracle.valueOf(DAI, yDAI, daiAmt), IERC4626(yDAI).convertToShares(daiAmt));
+        assertEq(yUsdcOracle.valueOf(USDC, yUSDC, usdcAmt), IERC4626(yUSDC).convertToShares(usdcAmt));
+        assertEq(yWethOracle.valueOf(WETH, yWETH, wethAmt), IERC4626(yWETH).convertToShares(wethAmt));
     }
 }
