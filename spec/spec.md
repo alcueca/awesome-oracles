@@ -23,9 +23,11 @@ This specification provides a standard API aimed to serve the majority of use ca
 ### Methods
 
 #### valueOf
-Returns the value of `baseAmount` of `baseAsset` in `quoteAsset` terms.
+Returns the value of `baseAmount` of `base` in `quote` terms.
 
-MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `baseAsset` and `quoteAsset` pair.
+MUST round down towards 0.
+
+MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `base` and `quote` pair.
 
 MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly specified.
 
@@ -48,9 +50,11 @@ MUST revert with `OracleUntrustedData` if not capable to provide data within a d
 ```
 
 #### priceOf
-Returns the value of one `whole unit` of `baseAsset` in `quoteAsset` terms, as a fixed point value with 18 decimals.
+Returns the value of one `whole unit` of `base` in `quote` terms, as a fixed point value with 18 decimals.
 
-MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `baseAsset` and `quoteAsset` pair.
+MUST round down towards 0.
+
+MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `base` and `quote` pair.
 
 MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly specified.
 
@@ -73,11 +77,11 @@ MUST revert with `OracleUntrustedData` if not capable to provide data within a d
 ### Special Addresses
 Some assets under the scope of this specification don't have an address, such as ETH, BTC and national currencies.
 
-For ETH, ERC-7535 will be applied, using  0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE as its address.
+For ETH, ERC-7535 will be applied, using `0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE` as its address.
 
-For BTC, the address will be 0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB.
+For BTC, the address will be `0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB`.
 
-For assets without an address, but with an ISO 4217 code, the code will be used (e.g. address(840) for USD).
+For assets without an address, but with an ISO 4217 code, the code will be used (e.g. `address(840)` for USD).
 
 ### Events
 There are no events defined in this specification
@@ -87,28 +91,24 @@ There are no events defined in this specification
 #### OracleUnsupportedPair
 ```yaml
 - name: OracleUnsupportedPair
-  type: event
+  type: error
 
   inputs:
     - name: base
-      indexed: true
       type: address
     - name: quote
-      indexed: true
       type: address
 ```
 
 #### OracleUntrustedData
 ```yaml
-- name: OracleUnsupportedPair
-  type: event
+- name: OracleUntrustedData
+  type: error
 
   inputs:
     - name: base
-      indexed: true
       type: address
     - name: quote
-      indexed: true
       type: address
 ```
 
