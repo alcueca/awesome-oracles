@@ -2,7 +2,7 @@
 // With thanks to @BoringCrypto
 pragma solidity ^0.8.0;
 
-import "../interfaces/IERC20.sol";
+import "forge-std/interfaces/IERC20.sol";
 
 // solhint-disable avoid-low-level-calls
 
