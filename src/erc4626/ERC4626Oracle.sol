@@ -2,15 +2,14 @@
 pragma solidity ^0.8.20;
 
 // types
+import {IOracle} from "../interfaces/IOracle.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
 import {IERC4626} from "forge-std/interfaces/IERC4626.sol";
 // libraries
 import {BoringERC20} from "../libraries/BoringERC20.sol";
 
-contract ERC4626Oracle {
+contract ERC4626Oracle is IOracle {
     using BoringERC20 for IERC20; // handles non-standard ERC20 tokens
-
-    error OracleUnsupportedPair();
 
     IERC4626 public immutable VAULT; // erc4626 vault
     uint256 public immutable VAULT_SCALAR; // 10 ** vault share token decimals
@@ -42,7 +41,7 @@ contract ERC4626Oracle {
             return VAULT.convertToAssets(baseAmount);
         } else {
             // this oracle supports a particular erc4626 vault, revert all other queries
-            revert OracleUnsupportedPair();
+            revert OracleUnsupportedPair(base, quote);
         }
     }
 
@@ -59,7 +58,7 @@ contract ERC4626Oracle {
             return (VAULT.convertToAssets(VAULT_SCALAR) * 1e18) / ASSET_SCALAR;
         } else {
             // this oracle supports a particular erc4626 vault, revert all other queries
-            revert OracleUnsupportedPair();
+            revert OracleUnsupportedPair(base, quote);
         }
     }
 }
