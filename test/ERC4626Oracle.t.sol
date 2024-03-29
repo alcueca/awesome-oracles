@@ -27,13 +27,13 @@ contract ERC4626OracleTest is Test {
     address constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
     // prices at block 19493590
-    uint256 constant yDAI_DAI = 1000000000000000000; // yDAI/DAI
-    uint256 constant yUSDC_USDC = 1000000000000000000; // yUSDC/USDC
-    uint256 constant yWETH_WETH = 1000000000000000000; // yWETH/WETH
+    uint256 constant DAI_yDAI = 999573011923275867; // DAI/yDAI
+    uint256 constant USDC_yUSDC = 999918000000000000; // USDC/yUSDC
+    uint256 constant WETH_yWETH = 999987596242017279; // WETH/yWETH
 
-    uint256 constant DAI_yDAI = 1000000000000000000; // DAI/yDAI
-    uint256 constant USDC_yUSDC = 1000000000000000000; // USDC/yUSDC
-    uint256 constant WETH_yWETH = 1000000000000000000; // WETH/yWETH
+    uint256 constant yDAI_DAI = 1000427170473423012; // yDAI/DAI
+    uint256 constant yUSDC_USDC = 1000081000000000000; // yUSDC/USDC
+    uint256 constant yWETH_WETH = 1000012403911837841; // yWETH/WETH
 
     function setUp() public {
         vm.createSelectFork("mainnet", block.number);
