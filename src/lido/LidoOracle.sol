@@ -13,11 +13,14 @@ contract LidoOracle {
     uint256 public immutable STETH_SCALAR;
     uint256 public immutable WSTETH_SCALAR;
 
-    constructor(IWSTETH wsteth_) {
-        STETH = ISTETH(wsteth_.stETH());
-        WSTETH = wsteth_;
-        STETH_SCALAR = 10 ** STETH.decimals();
+    constructor(address wsteth_) {
+        // configure wsteth constants
+        WSTETH = IWSTETH(wsteth_);
         WSTETH_SCALAR = 10 ** IERC20(address(wsteth_)).decimals();
+
+        // configure steth constants
+        STETH = ISTETH(WSTETH.stETH());
+        STETH_SCALAR = 10 ** STETH.decimals();
     }
 
     /// @notice Returns the value of baseAmount of baseAsset in quoteAsset terms.
@@ -27,10 +30,13 @@ contract LidoOracle {
     /// @return quoteAmount The amount of `quote` that has the same value as `baseAmount`.
     function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount) {
         if (base == address(STETH) && quote == address(WSTETH)) {
+            // value of given stETH amount, in terms of wstETH
             return STETH.getSharesByPooledEth(baseAmount);
         } else if (base == address(WSTETH) && quote == address(STETH)) {
+            // value of given wstETH amount, in terms of stETH
             return STETH.getPooledEthByShares(baseAmount);
         } else {
+            // this oracle only supports pricing for stETH and wstETH asset pairs
             revert OracleUnsupportedPair(base, quote);
         }
     }
@@ -41,10 +47,13 @@ contract LidoOracle {
     /// @return baseQuotePrice The value of a minimum representable unit of `base` in `quote` terms, as an FP18.
     function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice) {
         if (base == address(STETH) && quote == address(WSTETH)) {
+            // value of one stETH whole unit, in terms of wstETH
             return (STETH.getSharesByPooledEth(STETH_SCALAR) * 1e18) / WSTETH_SCALAR;
         } else if (base == address(WSTETH) && quote == address(STETH)) {
+            // value of one wstETH whole unit, in terms of stETH
             return (STETH.getPooledEthByShares(WSTETH_SCALAR) * 1e18) / STETH_SCALAR;
         } else {
+            // this oracle only supports pricing for stETH and wstETH asset pairs
             revert OracleUnsupportedPair(base, quote);
         }
     }
