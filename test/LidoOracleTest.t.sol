@@ -4,6 +4,7 @@ pragma solidity ^0.8.20;
 // types
 import {ISTETH} from "../src/lido/ISTETH.sol";
 import {IWSTETH} from "../src/lido/IWSTETH.sol";
+import {IOracle} from "../src/interfaces/IOracle.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
 // libraries
 import {console2} from "forge-std/Test.sol";
@@ -66,10 +67,10 @@ contract LidoOracleTest is Test {
         vm.assume(base != STETH || quote != WSTETH);
         vm.assume(base != WSTETH || quote != STETH);
 
-        vm.expectRevert(abi.encodeWithSelector(LidoOracle.OracleUnsupportedPair.selector, base, quote));
+        vm.expectRevert(abi.encodeWithSelector(IOracle.OracleUnsupportedPair.selector, base, quote));
         lidoOracle.priceOf(base, quote);
 
-        vm.expectRevert(abi.encodeWithSelector(LidoOracle.OracleUnsupportedPair.selector, base, quote));
+        vm.expectRevert(abi.encodeWithSelector(IOracle.OracleUnsupportedPair.selector, base, quote));
         lidoOracle.valueOf(base, quote, amt);
     }
 }

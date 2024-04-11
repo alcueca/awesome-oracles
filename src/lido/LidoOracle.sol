@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
+// types
 import {ISTETH} from "./ISTETH.sol";
 import {IWSTETH} from "./IWSTETH.sol";
+import {IOracle} from "../interfaces/IOracle.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
-contract LidoOracle {
-    error OracleUnsupportedPair(address base, address quote);
-
+contract LidoOracle is IOracle {
     ISTETH public immutable STETH;
     IWSTETH public immutable WSTETH;
     uint256 public immutable STETH_SCALAR;
