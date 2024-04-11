@@ -26,7 +26,7 @@ contract ERC4626OracleTest is Test {
     address constant USDC = 0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48;
     address constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
-    // prices at block 19493590
+    // prices at block 19537700
     uint256 constant DAI_yDAI = 999573011923275867; // DAI/yDAI
     uint256 constant USDC_yUSDC = 999918000000000000; // USDC/yUSDC
     uint256 constant WETH_yWETH = 999987596242017279; // WETH/yWETH
