@@ -5,6 +5,8 @@ import {IOracle} from "../interfaces/IOracle.sol";
 import {BoringERC20} from "../libraries/BoringERC20.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
+import { console2 } from "forge-std/console2.sol";
+
 /**
  * @title ComposerOracle
  */
@@ -73,13 +75,17 @@ contract ComposerOracle is IOracle {
         address[] memory path
     ) internal {
         uint256 pathLength = path.length;
+        
+        // Check that oracles for all intermediate pairs exist
         unchecked {
+            address base_ = base;
             for (uint256 p; p < pathLength; ++p) {
-                OracleWithDecimals memory oracle_ = oracles[base][path[p]];
-                if(oracle_.oracle == IOracle(address(0))) revert OracleUnsupportedPair(base, path[p]);
-                base = path[p];
+                OracleWithDecimals memory oracle_ = oracles[base_][path[p]];
+                if(oracle_.oracle == IOracle(address(0))) revert OracleUnsupportedPair(base_, path[p]);
+                base_ = path[p];
             }
         }
+
         paths[base][quote] = path;
         emit PathSet(base, quote, path);
     }

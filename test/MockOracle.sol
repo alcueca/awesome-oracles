@@ -10,7 +10,7 @@ import {BoringERC20} from "../src/libraries/BoringERC20.sol";
 
 contract MockOracle is IOracle {
     struct Pair {
-        uint256 ratio; // With 18 additional decimals
+        uint256 ratio; // One unit of base, in quote terms
         uint8 baseDecimals;
         uint8 quoteDecimals;
     }
@@ -29,7 +29,7 @@ contract MockOracle is IOracle {
     function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount) {
         Pair memory pair = pairs[base][quote];
         if (pair.ratio == 0) revert OracleUnsupportedPair(base, quote);
-        return baseAmount * pair.ratio;
+        return baseAmount * pair.ratio / 10 ** pair.baseDecimals;
     }
 
     /// @notice Returns the price of baseAsset in quoteAsset terms.
@@ -39,6 +39,6 @@ contract MockOracle is IOracle {
     function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice) {
         Pair memory pair = pairs[base][quote];
         if (pair.ratio == 0) revert OracleUnsupportedPair(base, quote);
-        return 10 ** pair.baseDecimals * pair.ratio * 1e18 / 10 ** pair.quoteDecimals;
+        return pair.ratio * 1e18 / 10 ** pair.quoteDecimals;
     }
 }
