@@ -94,16 +94,7 @@ contract ComposerOracle is IOracle {
         address quote,
         uint256 amountBase
     ) external view virtual override returns (uint256 amountQuote) {
-        amountQuote = amountBase;
-        address[] memory path = paths[base][quote];
-        uint256 pathLength = path.length;
-        unchecked {
-            for (uint256 p; p < pathLength; ++p) {
-                amountQuote = _valueOf(base, path[p], amountQuote);
-                base = path[p];
-            }
-        }
-        amountQuote = _valueOf(base, quote, amountQuote);
+        amountQuote = _valueOfPath(base, quote, amountBase);
     }
 
     /// @notice Return the price of base in quote terms, with 18 decimals, at the latest oracle price, through a path is exists.
@@ -115,29 +106,45 @@ contract ComposerOracle is IOracle {
         address quote
     ) external view virtual override returns (uint256 price) {
         address[] memory path = paths[base][quote];
-        uint256 pathLength = path.length;
-        
         OracleWithDecimals memory oracle = oracles[base][path[0]];
-        price = 10 ** oracle.baseDecimals;
-        unchecked {
-            for (uint256 p; p < pathLength; ++p) {
-                price = _valueOf(base, path[p], price);
-                base = path[p];
-            }
-        }
-        price = _valueOf(base, quote, price) * 1e18 / 10 ** oracle.quoteDecimals;
+        uint256 baseUnit = 10 ** oracle.baseDecimals;
+
+        price = _valueOfPath(base, quote, baseUnit) * 1e18 / 10 ** oracle.quoteDecimals;
     }
 
-    /// @notice Convert amountBase base into quote at the latest oracle price, through a path is exists.
+
+    /// @notice Convert amountBase base into quote, through a path is exists.
     /// @param base base token
     /// @param quote quote token
     /// @param amountBase Amount of base to convert to quote
     /// @return amountQuote Amount of quote token converted from base
-    function _valueOf(
+    function _valueOfPath(
         address base,
         address quote,
         uint256 amountBase
-    ) private view returns (uint256 amountQuote) {
+    ) internal view virtual returns (uint256 amountQuote) {
+        amountQuote = amountBase;
+        address[] memory path = paths[base][quote];
+        uint256 pathLength = path.length;
+        unchecked {
+            for (uint256 p; p < pathLength; ++p) {
+                amountQuote = _valueOfStep(base, path[p], amountQuote);
+                base = path[p];
+            }
+        }
+        amountQuote = _valueOfStep(base, quote, amountQuote);
+    }
+
+    /// @notice Convert amountBase base into quote for a direct oracle call.
+    /// @param base base token
+    /// @param quote quote token
+    /// @param amountBase Amount of base to convert to quote
+    /// @return amountQuote Amount of quote token converted from base
+    function _valueOfStep(
+        address base,
+        address quote,
+        uint256 amountBase
+    ) internal view returns (uint256 amountQuote) {
         OracleWithDecimals memory oracle = oracles[base][quote];
         if (address(oracle.oracle) == address(0)) revert OracleUnsupportedPair(base, quote);
         amountQuote = oracle.oracle.valueOf(base, quote, amountBase);
