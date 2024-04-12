@@ -111,8 +111,12 @@ contract ComposerOracle is IOracle {
         address base,
         address quote
     ) external view virtual override returns (uint256 price) {
-        address[] memory path = paths[base][quote];
-        OracleWithDecimals memory oracle = oracles[base][path[0]];
+        OracleWithDecimals memory oracle = oracles[base][quote];
+        if (address(oracle.oracle) == address(0)) { // No direct oracle, check path
+            address[] memory path = paths[base][quote];
+            if (path.length == 0) revert OracleUnsupportedPair(base, quote);
+            oracle = oracles[base][path[0]];
+        }
         uint256 baseUnit = 10 ** oracle.baseDecimals;
 
         price = _valueOfPath(base, quote, baseUnit) * 1e18 / 10 ** oracle.quoteDecimals;

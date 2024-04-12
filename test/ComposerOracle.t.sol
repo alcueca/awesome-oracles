@@ -170,4 +170,22 @@ contract ComposerOracleTest is Test {
         assertEq(composerOracle.valueOf(DAI, DAI, 1e18), 999999_837147_677368);
         // Value obtained experimentally, and explained by the loss of precision in the intermediate steps
     }
+
+    function testDirectPriceOf() public view {
+        // price of DAI in terms of WETH
+        assertEq(composerOracle.priceOf(DAI, WETH), DAI_WETH);
+        // price of WETH in terms of DAI
+        assertEq(composerOracle.priceOf(WETH, DAI), WETH_DAI);
+        // price of USDC in terms of WETH
+        assertEq(composerOracle.priceOf(USDC, WETH), USDC_WETH);
+        // price of WETH in terms of USDC
+        assertEq(composerOracle.priceOf(WETH, USDC), WETH_USDC * 1e12);
+    }
+
+    function testPathPriceOf() public view {
+        // price of DAI in terms of USDC
+        assertEq(composerOracle.priceOf(DAI, USDC), DAI_WETH * WETH_USDC / 1e18);
+        // price of USDC in terms of DAI
+        assertEq(composerOracle.priceOf(USDC, DAI), USDC_WETH * WETH_DAI / 1e18);
+    }
 }
