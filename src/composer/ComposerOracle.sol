@@ -32,8 +32,8 @@ contract ComposerOracle is IOracle {
         address[] path;
     }
 
-    mapping(address => mapping(address => OracleWithDecimals)) public oracles;
-    mapping(address => mapping(address => address[])) public paths;
+    mapping(address base => mapping(address quote => OracleWithDecimals oracle)) public oracles;
+    mapping(address base => mapping(address quote => address[] path)) public paths;
 
     constructor (SetOracle[] memory oracles_, SetPath[] memory paths_) {
         uint256 oraclesLength = oracles_.length;
