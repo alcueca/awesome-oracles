@@ -50,7 +50,7 @@ contract ComposerOracleTest is Test {
         setOracles.push(ComposerOracle.SetOracle({
             base: DAI,
             quote: WETH,
-            oracle: ComposerOracle.OracleWithDecimals({
+            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
                 oracle: chainlinkOracle,
                 baseDecimals: 18,
                 quoteDecimals: 18
@@ -59,7 +59,7 @@ contract ComposerOracleTest is Test {
         setOracles.push(ComposerOracle.SetOracle({
             base: WETH,
             quote: DAI,
-            oracle: ComposerOracle.OracleWithDecimals({
+            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
                 oracle: chainlinkOracle,
                 baseDecimals: 18,
                 quoteDecimals: 18
@@ -68,7 +68,7 @@ contract ComposerOracleTest is Test {
         setOracles.push(ComposerOracle.SetOracle({
             base: USDC,
             quote: WETH,
-            oracle: ComposerOracle.OracleWithDecimals({
+            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
                 oracle: chainlinkOracle,
                 baseDecimals: 6,
                 quoteDecimals: 18
@@ -77,7 +77,7 @@ contract ComposerOracleTest is Test {
         setOracles.push(ComposerOracle.SetOracle({
             base: WETH,
             quote: USDC,
-            oracle: ComposerOracle.OracleWithDecimals({
+            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
                 oracle: chainlinkOracle,
                 baseDecimals: 18,
                 quoteDecimals: 6

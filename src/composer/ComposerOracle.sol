@@ -18,12 +18,12 @@ contract ComposerOracle is IOracle {
         IOracle oracle;
         uint8 baseDecimals;
         uint8 quoteDecimals;
-    }
+    } // Decimals are needed to calculate priceOf
 
     struct SetOracle {
         address base;
         address quote;
-        OracleWithDecimals oracle;
+        OracleWithDecimals oracleWithDecimals;
     }
 
     struct SetPath {
@@ -36,57 +36,51 @@ contract ComposerOracle is IOracle {
     mapping(address base => mapping(address quote => address[] path)) public paths;
 
     constructor (SetOracle[] memory oracles_, SetPath[] memory paths_) {
-        uint256 oraclesLength = oracles_.length;
+        _setOracles(oracles_);
+        _setPaths(paths_);
+    }
+
+    /// @notice Set or reset an array of oracle sources with decimals
+    /// @param setOracles_ Array of SetOracle structs
+    function _setOracles(
+        SetOracle[] memory setOracles_
+    ) internal {
+        uint256 oraclesToSet = setOracles_.length;
         unchecked {
-            for (uint256 p; p < oraclesLength; ++p) {
-                _setOracle(oracles_[p].base, oracles_[p].quote, oracles_[p].oracle);
-            }
-        }
-        
-        uint256 pathsLength = paths_.length;
-        unchecked {
-            for (uint256 p; p < pathsLength; ++p) {
-                _setPath(paths_[p].base, paths_[p].quote, paths_[p].path);
+            for (uint256 p; p < oraclesToSet; ++p) {
+                SetOracle memory setOracle_ = setOracles_[p];
+                oracles[setOracle_.base][setOracle_.quote] = setOracle_.oracleWithDecimals;
+                emit OracleSet(setOracle_.base, setOracle_.quote, setOracle_.oracleWithDecimals.oracle);
             }
         }
     }
 
-    /// @notice Set or reset an oracle
-    /// @param base base token
-    /// @param quote quote token
-    /// @param oracle IOracle contract
-    function _setOracle(
-        address base,
-        address quote,
-        OracleWithDecimals memory oracle
+    /// @notice Set or reset an array of oracle paths
+    /// @param setPaths_ Array of SetPath structs
+    function _setPaths(
+        SetPath[] memory setPaths_
     ) internal {
-        oracles[base][quote] = oracle;
-        emit OracleSet(base, quote, oracle.oracle);
-    }
-
-    /// @notice Set or reset an oracle path
-    /// @param base base token
-    /// @param quote quote token
-    /// @param path Path from base to quote
-    function _setPath(
-        address base,
-        address quote,
-        address[] memory path
-    ) internal {
-        uint256 pathLength = path.length;
+        uint256 pathsToSet = setPaths_.length;
         
-        // Check that oracles for all intermediate pairs exist
         unchecked {
-            address base_ = base;
-            for (uint256 p; p < pathLength; ++p) {
-                OracleWithDecimals memory oracle_ = oracles[base_][path[p]];
-                if(oracle_.oracle == IOracle(address(0))) revert OracleUnsupportedPair(base_, path[p]);
-                base_ = path[p];
+            for (uint256 s; s < pathsToSet; ++s) {
+                SetPath memory setPath_ = setPaths_[s];
+                
+                // Check that oracles for all intermediate pairs exist
+                address[] memory path = setPath_.path;
+                address base_ = setPath_.base;
+
+                uint256 pathLength = path.length;
+                for (uint256 p; p < pathLength; ++p) {
+                    OracleWithDecimals memory oracle_ = oracles[base_][path[p]];
+                    if(oracle_.oracle == IOracle(address(0))) revert OracleUnsupportedPair(base_, path[p]);
+                    base_ = path[p];
+                }
+
+                paths[setPath_.base][setPath_.quote] = setPath_.path;
+                emit PathSet(setPath_.base, setPath_.quote, setPath_.path);
             }
         }
-
-        paths[base][quote] = path;
-        emit PathSet(base, quote, path);
     }
 
     /// @notice Convert amountBase base into quote at the latest oracle price, through a path is exists.
