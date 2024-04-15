@@ -5,7 +5,6 @@ import {IOracle} from "../interfaces/IOracle.sol";
 import {BoringERC20} from "../libraries/BoringERC20.sol";
 import {IERC20} from "forge-std/interfaces/IERC20.sol";
 
-import { console2 } from "forge-std/console2.sol";
 
 /**
  * @title ComposerOracle
