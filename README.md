@@ -21,6 +21,13 @@ https://github.com/alcueca/oracles/blob/main/spec/spec.md
 
 Please do. Open a PR.
 
+Remember to run the following two commands before pushing to conform to our coding style.
+
+```
+yarn prettier:write
+forge fmt
+```
+
 ## Security Considerations
 
 These contracts are unaudited. Please consider having them reviewed before integrating. Each contract includes a
