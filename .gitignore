@@ -1,14 +1,20 @@
-# Compiler files
-cache/
-out/
+# directories
+cache
+node_modules
+out
+.idea
 
-# Ignores development broadcast logs
-!/broadcast
-/broadcast/*/31337/
-/broadcast/**/dry-run/
+# files
+*.env
+*.envrc
+*.log
+.DS_Store
+.pnp.*
+lcov.info
+yarn.lock
+.secret
 
-# Docs
-docs/
-
-# Dotenv file
-.env
+# broadcasts
+!broadcast
+broadcast/*
+broadcast/*/31337/

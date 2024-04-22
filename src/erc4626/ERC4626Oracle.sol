@@ -2,11 +2,11 @@
 pragma solidity ^0.8.20;
 
 // types
-import {IOracle} from "../interfaces/IOracle.sol";
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
-import {IERC4626} from "forge-std/interfaces/IERC4626.sol";
+import { IOracle } from "../interfaces/IOracle.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
+import { IERC4626 } from "forge-std/interfaces/IERC4626.sol";
 // libraries
-import {BoringERC20} from "../libraries/BoringERC20.sol";
+import { BoringERC20 } from "../libraries/BoringERC20.sol";
 
 contract ERC4626Oracle is IOracle {
     using BoringERC20 for IERC20; // handles non-standard ERC20 tokens

@@ -2,13 +2,13 @@
 pragma solidity ^0.8.20;
 
 // types
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
-import {IERC4626} from "forge-std/interfaces/IERC4626.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
+import { IERC4626 } from "forge-std/interfaces/IERC4626.sol";
 // libraries
-import {console2} from "forge-std/Test.sol";
+import { console2 } from "forge-std/Test.sol";
 // contracts
-import {Test} from "forge-std/Test.sol";
-import {ERC4626Oracle} from "../src/erc4626/ERC4626Oracle.sol";
+import { Test } from "forge-std/Test.sol";
+import { ERC4626Oracle } from "../src/erc4626/ERC4626Oracle.sol";
 
 contract ERC4626OracleTest is Test {
     // erc4626 oracles
@@ -27,13 +27,13 @@ contract ERC4626OracleTest is Test {
     address constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
     // prices at block 19537700
-    uint256 constant DAI_yDAI = 999573011923275867; // DAI/yDAI
-    uint256 constant USDC_yUSDC = 999918000000000000; // USDC/yUSDC
-    uint256 constant WETH_yWETH = 999987596242017279; // WETH/yWETH
+    uint256 constant DAI_yDAI = 999_573_011_923_275_867; // DAI/yDAI
+    uint256 constant USDC_yUSDC = 999_918_000_000_000_000; // USDC/yUSDC
+    uint256 constant WETH_yWETH = 999_987_596_242_017_279; // WETH/yWETH
 
-    uint256 constant yDAI_DAI = 1000427170473423012; // yDAI/DAI
-    uint256 constant yUSDC_USDC = 1000081000000000000; // yUSDC/USDC
-    uint256 constant yWETH_WETH = 1000012403911837841; // yWETH/WETH
+    uint256 constant yDAI_DAI = 1_000_427_170_473_423_012; // yDAI/DAI
+    uint256 constant yUSDC_USDC = 1_000_081_000_000_000_000; // yUSDC/USDC
+    uint256 constant yWETH_WETH = 1_000_012_403_911_837_841; // yWETH/WETH
 
     function setUp() public {
         vm.createSelectFork("mainnet", block.number);

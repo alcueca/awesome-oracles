@@ -2,15 +2,15 @@
 pragma solidity ^0.8.20;
 
 // types
-import {ISTETH} from "../src/lido/ISTETH.sol";
-import {IWSTETH} from "../src/lido/IWSTETH.sol";
-import {IOracle} from "../src/interfaces/IOracle.sol";
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import { ISTETH } from "../src/lido/ISTETH.sol";
+import { IWSTETH } from "../src/lido/IWSTETH.sol";
+import { IOracle } from "../src/interfaces/IOracle.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
 // libraries
-import {console2} from "forge-std/Test.sol";
+import { console2 } from "forge-std/Test.sol";
 // contracts
-import {Test} from "forge-std/Test.sol";
-import {LidoOracle} from "../src/lido/LidoOracle.sol";
+import { Test } from "forge-std/Test.sol";
+import { LidoOracle } from "../src/lido/LidoOracle.sol";
 
 contract LidoOracleTest is Test {
     // lido oracle
@@ -21,8 +21,8 @@ contract LidoOracleTest is Test {
     address constant WSTETH = 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0;
 
     // prices at block 19537700
-    uint256 constant STETH_WSTETH = 860734899407824565; // stETH/wstETH
-    uint256 constant WSTETH_STETH = 1161797901639620023; // wstETH/stETH
+    uint256 constant STETH_WSTETH = 860_734_899_407_824_565; // stETH/wstETH
+    uint256 constant WSTETH_STETH = 1_161_797_901_639_620_023; // wstETH/stETH
 
     function setUp() public {
         vm.createSelectFork("mainnet", block.number);
