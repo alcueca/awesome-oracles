@@ -1,9 +1,7 @@
 // SPDX-License-Identifier: MIT
-pragma solidity >=0.8.0;
+pragma solidity >=0.8.19;
 
 import { IOracle } from "../interfaces/IOracle.sol";
-import { BoringERC20 } from "../libraries/BoringERC20.sol";
-import { IERC20 } from "forge-std/interfaces/IERC20.sol";
 
 /**
  * @title ComposerOracle
