@@ -36,9 +36,9 @@ contract ChainlinkOracle is IOracle {
         uint256 answer = _getAnswer(base, quote);
 
         if (isForward) {
-            return (baseAmount * answer * DENOMINATOR_SCALAR) / (NUMERATOR_SCALAR * FEED_SCALAR);
+            return (baseAmount * answer * 1e18) / (NUMERATOR_SCALAR * FEED_SCALAR);
         } else {
-            return (baseAmount * NUMERATOR_SCALAR * FEED_SCALAR) / (answer * DENOMINATOR_SCALAR);
+            return (baseAmount * 1e18 * FEED_SCALAR) / (answer * DENOMINATOR_SCALAR);
         }
     }
 
@@ -48,9 +48,9 @@ contract ChainlinkOracle is IOracle {
         uint256 answer = _getAnswer(base, quote);
 
         if (isForward) {
-            return answer * DENOMINATOR_SCALAR / FEED_SCALAR;
+            return answer * 1e18 / FEED_SCALAR;
         } else {
-            return NUMERATOR_SCALAR * FEED_SCALAR / answer;
+            return FEED_SCALAR * 1e18 / answer;
         }
     }
 
