@@ -54,6 +54,11 @@ contract ChainlinkOracle is IOracle {
         }
     }
 
+    /// @notice Fetch the latest price from Chainlink.
+    /// @param base The asset that the user needs to know the value for.
+    /// @param quote The asset in which the user needs to value the base.
+    /// @dev Reverts if answer is non-positive or price is too stale.
+    /// @return The latest Chainlink price.
     function _getAnswer(address base, address quote) internal view returns (uint256) {
         (, int256 answer,, uint256 updatedAt,) = FEED.latestRoundData();
         if (answer <= 0) {
@@ -67,7 +72,12 @@ contract ChainlinkOracle is IOracle {
         return uint256(answer);
     }
 
-    function _getQueryDirection(address base, address quote) internal view returns (bool isForward) {
+    /// @notice Get the direction of a price query.
+    /// @param base The asset that the user needs to know the value for.
+    /// @param quote The asset in which the user needs to value the base.
+    /// @dev Reverts if base and quote do not correpsond to the feed assets.
+    /// @param return Whether if the query is in the direction of the feed.
+    function _getQueryDirection(address base, address quote) internal view returns (bool /* isForward */) {
         if (base == NUMERATOR_ASSET && quote == DENOMINATOR_ASSET) {
             return true;
         } else if (base == DENOMINATOR_ASSET && quote == NUMERATOR_ASSET) {
