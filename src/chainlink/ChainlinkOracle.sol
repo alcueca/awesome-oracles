@@ -77,7 +77,7 @@ contract ChainlinkOracle is IOracle {
     /// @param quote The asset in which the user needs to value the base.
     /// @dev Reverts if base and quote do not correpsond to the feed assets.
     /// @param return Whether if the query is in the direction of the feed.
-    function _getQueryDirection(address base, address quote) internal view returns (bool /* isForward */) {
+    function _getQueryDirection(address base, address quote) internal view returns (bool /* isForward */ ) {
         if (base == NUMERATOR_ASSET && quote == DENOMINATOR_ASSET) {
             return true;
         } else if (base == DENOMINATOR_ASSET && quote == NUMERATOR_ASSET) {
