@@ -1,7 +1,6 @@
 # Full reference https://github.com/foundry-rs/foundry/tree/master/config
 
 [profile.default]
-  auto_detect_solc = false
   block_number = 19537700 # Mar-29-2024 05:52:47 AM +UTC
   bytecode_hash = "none"
   cbor_metadata = false
@@ -12,10 +11,10 @@
   optimizer_runs = 10_000
   out = "out"
   script = "script"
-  solc = "0.8.20"
+  solc_version = "0.8.25"
   src = "src"
   test = "test"
-  evm_version = 'london'
+  evm_version = 'paris'
   verbosity = 2
 
 [profile.ci]
@@ -31,17 +30,10 @@
   mainnet = { key = "${API_KEY_ETHERSCAN}", chain = 1 }
   optimism = { key = "${API_KEY_OPTIMISTIC_ETHERSCAN}", chain = 10 }
   polygon = { key = "${API_KEY_POLYGONSCAN}", chain = 137 }
-  # sepolia = { key = "${API_KEY_ETHERSCAN}", chain = 58008 }
+  # sepolia = { key = "${API_KEY_ETHERSCAN}", chain = 11155111 }
 
 [fmt]
   bracket_spacing = true
-  int_types = "long"
-  line_length = 120
-  multiline_func_header = "all"
-  number_underscore = "thousands"
-  quote_style = "double"
-  tab_width = 4
-  wrap_comments = true
 
 [rpc_endpoints]
   arbitrum_one = "${ARBITRUM_RPC}"

@@ -80,11 +80,7 @@ contract ComposerOracle is IOracle {
     /// @param quote quote token
     /// @param amountBase Amount of base to convert to quote
     /// @return amountQuote Amount of quote token converted from base
-    function valueOf(
-        address base,
-        address quote,
-        uint256 amountBase
-    )
+    function valueOf(address base, address quote, uint256 amountBase)
         external
         view
         virtual
@@ -117,11 +113,7 @@ contract ComposerOracle is IOracle {
     /// @param quote quote token
     /// @param amountBase Amount of base to convert to quote
     /// @return amountQuote Amount of quote token converted from base
-    function _valueOfPath(
-        address base,
-        address quote,
-        uint256 amountBase
-    )
+    function _valueOfPath(address base, address quote, uint256 amountBase)
         internal
         view
         virtual
@@ -144,11 +136,7 @@ contract ComposerOracle is IOracle {
     /// @param quote quote token
     /// @param amountBase Amount of base to convert to quote
     /// @return amountQuote Amount of quote token converted from base
-    function _valueOfStep(
-        address base,
-        address quote,
-        uint256 amountBase
-    )
+    function _valueOfStep(address base, address quote, uint256 amountBase)
         internal
         view
         returns (uint256 amountQuote)
