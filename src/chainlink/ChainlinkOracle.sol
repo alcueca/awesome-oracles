@@ -2,10 +2,10 @@
 pragma solidity ^0.8.20;
 
 // types
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
-import {AggregatorV3Interface} from "./AggregatorV3Interface.sol";
-import {IOracle} from "../interfaces/IOracle.sol";
-import {BoringERC20} from "../libraries/BoringERC20.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
+import { AggregatorV3Interface } from "./AggregatorV3Interface.sol";
+import { IOracle } from "../interfaces/IOracle.sol";
+import { BoringERC20 } from "../libraries/BoringERC20.sol";
 
 contract ChainlinkOracle is IOracle {
     using BoringERC20 for IERC20; // handles non-standard ERC20 tokens
@@ -76,7 +76,7 @@ contract ChainlinkOracle is IOracle {
     /// @param base The asset that the user needs to know the value for.
     /// @param quote The asset in which the user needs to value the base.
     /// @dev Reverts if base and quote do not correpsond to the feed assets.
-    /// @param return Whether if the query is in the direction of the feed.
+    /// @return Whether if the query is in the direction of the feed.
     function _getQueryDirection(address base, address quote) internal view returns (bool /* isForward */ ) {
         if (base == NUMERATOR_ASSET && quote == DENOMINATOR_ASSET) {
             return true;
