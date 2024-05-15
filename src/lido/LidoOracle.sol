@@ -5,7 +5,6 @@ pragma solidity ^0.8.20;
 import { ISTETH } from "./ISTETH.sol";
 import { IWSTETH } from "./IWSTETH.sol";
 import { IOracle } from "../interfaces/IOracle.sol";
-import { IERC20 } from "forge-std/interfaces/IERC20.sol";
 
 contract LidoOracle is IOracle {
     ISTETH public immutable STETH;

@@ -47,34 +47,10 @@ contract ComposerOracleTest is Test {
         roundtripPath.push(USDC);
         roundtripPath.push(WETH);
 
-        setOracles.push(
-            ComposerOracle.SetOracle({
-                base: DAI,
-                quote: WETH,
-                oracle: chainlinkOracle
-            })
-        );
-        setOracles.push(
-            ComposerOracle.SetOracle({
-                base: WETH,
-                quote: DAI,
-                oracle: chainlinkOracle
-            })
-        );
-        setOracles.push(
-            ComposerOracle.SetOracle({
-                base: USDC,
-                quote: WETH,
-                oracle: chainlinkOracle
-            })
-        );
-        setOracles.push(
-            ComposerOracle.SetOracle({
-                base: WETH,
-                quote: USDC,
-                oracle: chainlinkOracle
-            })
-        );
+        setOracles.push(ComposerOracle.SetOracle({ base: DAI, quote: WETH, oracle: chainlinkOracle }));
+        setOracles.push(ComposerOracle.SetOracle({ base: WETH, quote: DAI, oracle: chainlinkOracle }));
+        setOracles.push(ComposerOracle.SetOracle({ base: USDC, quote: WETH, oracle: chainlinkOracle }));
+        setOracles.push(ComposerOracle.SetOracle({ base: WETH, quote: USDC, oracle: chainlinkOracle }));
 
         setPaths.push(ComposerOracle.SetPath({ base: DAI, quote: USDC, path: wethPath }));
         setPaths.push(ComposerOracle.SetPath({ base: USDC, quote: DAI, path: wethPath }));

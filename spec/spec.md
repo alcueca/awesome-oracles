@@ -18,10 +18,10 @@ integration and serving the needs of product teams with less knowledge, requirem
 
 ### Definitions
 
-- base asset: The asset that the user needs to know the value for (e.g: USDC as in "I need to know the value of
-  1e6 USDC in ETH terms").
-- quote asset: The asset in which the user needs to value the `base` (e.g: ETH as in "I need to know the value
-  of 1e6 USDC in ETH terms").
+- base asset: The asset that the user needs to know the value for (e.g: USDC as in "I need to know the value of 1e6 USDC
+  in ETH terms").
+- quote asset: The asset in which the user needs to value the `base` (e.g: ETH as in "I need to know the value of 1e6
+  USDC in ETH terms").
 - value: An amount of `base` in `quote` terms (e.g. The `value` of 1000e6 USDC in ETH terms is 283,969,794,427,307,000
   ETH, and the `value` of 1000e18 ETH in USDC terms is 3,521,501,299,000 USDC).
 
@@ -99,10 +99,12 @@ There are no events defined in this specification
 
 ### Rationale
 
-The use of `valueOf` doesn't require the consumer to be aware of any decimal partitions that might have been defined for the `base` or `quote` and should be
-preferred in most data processing cases.
+The use of `valueOf` doesn't require the consumer to be aware of any decimal partitions that might have been defined for
+the `base` or `quote` and should be preferred in most data processing cases.
 
-The spec doesn't include a `priceOf` function because it is rarely needed on-chain, and it would be a decimal number of difficult representation. The popular option for representing prices can be implemented for ERC20 with decimals as `oracle.valueOf(base, quote, 10**base.decimals()) and will give the value of a whole unit of base in quote terms.
+The spec doesn't include a `priceOf` function because it is rarely needed on-chain, and it would be a decimal number of
+difficult representation. The popular option for representing prices can be implemented for ERC20 with decimals as
+`oracle.valueOf(base, quote, 10\*\*base.decimals()) and will give the value of a whole unit of base in quote terms.
 
 ### Backwards Compatibility
 
