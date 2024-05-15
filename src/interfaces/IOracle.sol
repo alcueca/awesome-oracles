@@ -25,17 +25,4 @@ interface IOracle {
     /// @param baseAmount The amount of `base` to convert.
     /// @return quoteAmount The value of `baseAmount` of `base` in `quote` terms
     function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount);
-
-    /// @notice Returns the value of one `whole unit` of `base` in `quote` terms, as a fixed point value with 18
-    /// decimals.
-    /// @dev MUST round down towards 0.
-    /// MUST revert with `OracleUnsupportedPair` if not capable to provide data for the specified `base` and `quote`
-    /// pair.
-    /// MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly
-    /// specified.
-    /// @param base The asset that the user needs to know the price for.
-    /// @param quote The asset in which the user needs to price the base.
-    /// @return baseQuotePrice The value of one whole unit of `base` in `quote` terms, as a fixed point value with 18
-    /// decimals.
-    function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice);
 }

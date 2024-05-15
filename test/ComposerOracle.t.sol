@@ -51,44 +51,28 @@ contract ComposerOracleTest is Test {
             ComposerOracle.SetOracle({
                 base: DAI,
                 quote: WETH,
-                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                    oracle: chainlinkOracle,
-                    baseDecimals: 18,
-                    quoteDecimals: 18
-                })
+                oracle: chainlinkOracle
             })
         );
         setOracles.push(
             ComposerOracle.SetOracle({
                 base: WETH,
                 quote: DAI,
-                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                    oracle: chainlinkOracle,
-                    baseDecimals: 18,
-                    quoteDecimals: 18
-                })
+                oracle: chainlinkOracle
             })
         );
         setOracles.push(
             ComposerOracle.SetOracle({
                 base: USDC,
                 quote: WETH,
-                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                    oracle: chainlinkOracle,
-                    baseDecimals: 6,
-                    quoteDecimals: 18
-                })
+                oracle: chainlinkOracle
             })
         );
         setOracles.push(
             ComposerOracle.SetOracle({
                 base: WETH,
                 quote: USDC,
-                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                    oracle: chainlinkOracle,
-                    baseDecimals: 18,
-                    quoteDecimals: 6
-                })
+                oracle: chainlinkOracle
             })
         );
 
@@ -112,17 +96,13 @@ contract ComposerOracleTest is Test {
 
     function testComposerOracleOracles() public view {
         // The oracle for DAI/WETH is chainlink
-        (IOracle oracle, uint8 baseDecimals, uint8 quoteDecimals) = composerOracle.oracles(DAI, WETH);
-        assertEq(address(oracle), address(chainlinkOracle));
+        assertEq(address(composerOracle.oracles(DAI, WETH)), address(chainlinkOracle));
         // The oracle for WETH/DAI is chainlink
-        (oracle, baseDecimals, quoteDecimals) = composerOracle.oracles(WETH, DAI);
-        assertEq(address(oracle), address(chainlinkOracle));
+        assertEq(address(composerOracle.oracles(WETH, DAI)), address(chainlinkOracle));
         // The oracle for USDC/WETH is chainlink
-        (oracle, baseDecimals, quoteDecimals) = composerOracle.oracles(USDC, WETH);
-        assertEq(address(oracle), address(chainlinkOracle));
+        assertEq(address(composerOracle.oracles(USDC, WETH)), address(chainlinkOracle));
         // The oracle for WETH/USDC is chainlink
-        (oracle, baseDecimals, quoteDecimals) = composerOracle.oracles(WETH, USDC);
-        assertEq(address(oracle), address(chainlinkOracle));
+        assertEq(address(composerOracle.oracles(WETH, USDC)), address(chainlinkOracle));
     }
 
     function testDirectValueOfOneUnit() public view {
@@ -165,23 +145,5 @@ contract ComposerOracleTest is Test {
         // price of one DAI whole unit, in terms of DAI, using multiple steps
         assertEq(composerOracle.valueOf(DAI, DAI, 1e18), 999_999_837_147_677_368);
         // Value obtained experimentally, and explained by the loss of precision in the intermediate steps
-    }
-
-    function testDirectPriceOf() public view {
-        // price of DAI in terms of WETH
-        assertEq(composerOracle.priceOf(DAI, WETH), DAI_WETH);
-        // price of WETH in terms of DAI
-        assertEq(composerOracle.priceOf(WETH, DAI), WETH_DAI);
-        // price of USDC in terms of WETH
-        assertEq(composerOracle.priceOf(USDC, WETH), USDC_WETH);
-        // price of WETH in terms of USDC
-        assertEq(composerOracle.priceOf(WETH, USDC), WETH_USDC * 1e12);
-    }
-
-    function testPathPriceOf() public view {
-        // price of DAI in terms of USDC
-        assertEq(composerOracle.priceOf(DAI, USDC), DAI_WETH * WETH_USDC / 1e18);
-        // price of USDC in terms of DAI
-        assertEq(composerOracle.priceOf(USDC, DAI), USDC_WETH * WETH_DAI / 1e18);
     }
 }

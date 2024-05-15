@@ -42,18 +42,6 @@ contract ChainlinkOracle is IOracle {
         }
     }
 
-    /// @inheritdoc IOracle
-    function priceOf(address base, address quote) external view returns (uint256) {
-        bool isForward = _getQueryDirection(base, quote);
-        uint256 answer = _getAnswer(base, quote);
-
-        if (isForward) {
-            return answer * 1e18 / FEED_SCALAR;
-        } else {
-            return FEED_SCALAR * 1e18 / answer;
-        }
-    }
-
     /// @notice Fetch the latest price from Chainlink.
     /// @param base The asset that the user needs to know the value for.
     /// @param quote The asset in which the user needs to value the base.

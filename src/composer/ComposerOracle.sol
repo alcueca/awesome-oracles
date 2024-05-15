@@ -10,16 +10,10 @@ contract ComposerOracle is IOracle {
     event OracleSet(address indexed base, address indexed quote, IOracle indexed oracle);
     event PathSet(address indexed base, address indexed quote, address[] indexed path);
 
-    struct OracleWithDecimals {
-        IOracle oracle;
-        uint8 baseDecimals;
-        uint8 quoteDecimals;
-    } // Decimals are needed to calculate priceOf
-
     struct SetOracle {
         address base;
         address quote;
-        OracleWithDecimals oracleWithDecimals;
+        IOracle oracle;
     }
 
     struct SetPath {
@@ -28,7 +22,7 @@ contract ComposerOracle is IOracle {
         address[] path;
     }
 
-    mapping(address base => mapping(address quote => OracleWithDecimals oracle)) public oracles;
+    mapping(address base => mapping(address quote => IOracle oracle)) public oracles;
     mapping(address base => mapping(address quote => address[] path)) public paths;
 
     constructor(SetOracle[] memory oracles_, SetPath[] memory paths_) {
@@ -43,8 +37,8 @@ contract ComposerOracle is IOracle {
         unchecked {
             for (uint256 p; p < oraclesToSet; ++p) {
                 SetOracle memory setOracle_ = setOracles_[p];
-                oracles[setOracle_.base][setOracle_.quote] = setOracle_.oracleWithDecimals;
-                emit OracleSet(setOracle_.base, setOracle_.quote, setOracle_.oracleWithDecimals.oracle);
+                oracles[setOracle_.base][setOracle_.quote] = setOracle_.oracle;
+                emit OracleSet(setOracle_.base, setOracle_.quote, setOracle_.oracle);
             }
         }
     }
@@ -64,8 +58,8 @@ contract ComposerOracle is IOracle {
 
                 uint256 pathLength = path.length;
                 for (uint256 p; p < pathLength; ++p) {
-                    OracleWithDecimals memory oracle_ = oracles[base_][path[p]];
-                    if (oracle_.oracle == IOracle(address(0))) revert OracleUnsupportedPair(base_, path[p]);
+                    IOracle oracle = oracles[base_][path[p]];
+                    if (oracle == IOracle(address(0))) revert OracleUnsupportedPair(base_, path[p]);
                     base_ = path[p];
                 }
 
@@ -88,24 +82,6 @@ contract ComposerOracle is IOracle {
         returns (uint256 amountQuote)
     {
         amountQuote = _valueOfPath(base, quote, amountBase);
-    }
-
-    /// @notice Return the price of base in quote terms, with 18 decimals, at the latest oracle price, through a path is
-    /// exists.
-    /// @param base base token
-    /// @param quote quote token
-    /// @return price price of base in quote terms, with 18 decimals
-    function priceOf(address base, address quote) external view virtual override returns (uint256 price) {
-        OracleWithDecimals memory oracle = oracles[base][quote];
-        if (address(oracle.oracle) == address(0)) {
-            // No direct oracle, check path
-            address[] memory path = paths[base][quote];
-            if (path.length == 0) revert OracleUnsupportedPair(base, quote);
-            oracle = oracles[base][path[0]];
-        }
-        uint256 baseUnit = 10 ** oracle.baseDecimals;
-
-        price = _valueOfPath(base, quote, baseUnit) * 1e18 / 10 ** oracle.quoteDecimals;
     }
 
     /// @notice Convert amountBase base into quote, through a path is exists.
@@ -141,8 +117,8 @@ contract ComposerOracle is IOracle {
         view
         returns (uint256 amountQuote)
     {
-        OracleWithDecimals memory oracle = oracles[base][quote];
-        if (address(oracle.oracle) == address(0)) revert OracleUnsupportedPair(base, quote);
-        amountQuote = oracle.oracle.valueOf(base, quote, amountBase);
+        IOracle oracle = oracles[base][quote];
+        if (address(oracle) == address(0)) revert OracleUnsupportedPair(base, quote);
+        amountQuote = oracle.valueOf(base, quote, amountBase);
     }
 }

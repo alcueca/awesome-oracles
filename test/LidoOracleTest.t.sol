@@ -34,20 +34,6 @@ contract LidoOracleTest is Test {
         assertEq(address(lidoOracle.WSTETH()), WSTETH); // wstETH config
     }
 
-    function testScalarConfig() public view {
-        // should equal 10 ** asset decimals
-        assertEq(lidoOracle.WSTETH_SCALAR(), 10 ** IERC20(WSTETH).decimals());
-        assertEq(lidoOracle.STETH_SCALAR(), 10 ** IERC20(STETH).decimals());
-    }
-
-    function testPriceOf() public view {
-        // price of one stETH whole unit, in terms of wstETH
-        assertEq(lidoOracle.priceOf(STETH, WSTETH), STETH_WSTETH);
-
-        // price of one wstETH whole unit, in terms of stETH
-        assertEq(lidoOracle.priceOf(WSTETH, STETH), WSTETH_STETH);
-    }
-
     function testValueOfStETH(uint256 stETHAmount) public view {
         // value of given stETH amount, in terms of wstETH
         vm.assume(stETHAmount <= IERC20(STETH).totalSupply());
@@ -66,9 +52,6 @@ contract LidoOracleTest is Test {
         // invalid input args revert with OracleUnsupported()
         vm.assume(base != STETH || quote != WSTETH);
         vm.assume(base != WSTETH || quote != STETH);
-
-        vm.expectRevert(abi.encodeWithSelector(IOracle.OracleUnsupportedPair.selector, base, quote));
-        lidoOracle.priceOf(base, quote);
 
         vm.expectRevert(abi.encodeWithSelector(IOracle.OracleUnsupportedPair.selector, base, quote));
         lidoOracle.valueOf(base, quote, amt);

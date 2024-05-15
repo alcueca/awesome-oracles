@@ -52,14 +52,4 @@ contract ChainlinkOracleTest is Test {
         assertApproxEqRel(usdcEthOracle.valueOf(WETH, USDC, 2e18), 6400e18, 0.05e18);
         assertApproxEqRel(ethUsdOracle.valueOf(Denominations.USD, WETH, 3200e18), 1e18, 0.05e18);
     }
-
-    function testPriceOfForward() public view {
-        assertApproxEqRel(usdcEthOracle.priceOf(USDC, WETH), 0.0003125e18, 0.05e18);
-        assertApproxEqRel(ethUsdOracle.priceOf(WETH, Denominations.USD), 3200e18, 0.05e18);
-    }
-
-    function testPriceOfReverse() public view {
-        assertApproxEqRel(usdcEthOracle.priceOf(WETH, USDC), 3200e18, 0.05e18);
-        assertApproxEqRel(ethUsdOracle.priceOf(Denominations.USD, WETH), 0.0003125e18, 0.05e18);
-    }
 }

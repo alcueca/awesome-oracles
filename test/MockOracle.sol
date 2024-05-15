@@ -31,14 +31,4 @@ contract MockOracle is IOracle {
         if (pair.ratio == 0) revert OracleUnsupportedPair(base, quote);
         return baseAmount * pair.ratio / 10 ** pair.baseDecimals;
     }
-
-    /// @notice Returns the price of baseAsset in quoteAsset terms.
-    /// @param base The asset that the user needs to know the price for.
-    /// @param quote The asset in which the user needs to price the `base`.
-    /// @return baseQuotePrice The value of a minimum representable unit of `base` in `quote` terms, as an FP18.
-    function priceOf(address base, address quote) external view returns (uint256 baseQuotePrice) {
-        Pair memory pair = pairs[base][quote];
-        if (pair.ratio == 0) revert OracleUnsupportedPair(base, quote);
-        return pair.ratio * 1e18 / 10 ** pair.quoteDecimals;
-    }
 }
