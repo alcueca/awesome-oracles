@@ -38,8 +38,8 @@ contract DeviationOracle is IOracle {
         uint256 primaryQuote = primary.valueOf(base, quote, amountBase);
         uint256 secondaryQuote = secondary.valueOf(base, quote, amountBase);
         if (
-            primaryQuote * (1e18 + maxDeviation) >= secondaryQuote
-                && primaryQuote * (1e18 - maxDeviation) <= secondaryQuote
+            primaryQuote * (1e18 - maxDeviation) >= secondaryQuote
+                && primaryQuote * (1e18 + maxDeviation) <= secondaryQuote
         ) {
             return primaryQuote;
         } else {
