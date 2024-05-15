@@ -1,6 +1,7 @@
 # Oracle Aggregator
 
-The Oracle Aggregator is a series of immutable smart contracts that provide data feeds from existing smart contracts with a consistent interface and behaviour.
+The Oracle Aggregator is a series of immutable smart contracts that provide data feeds from existing smart contracts
+with a consistent interface and behaviour.
 
 ## Specification
 
@@ -9,18 +10,28 @@ https://github.com/alcueca/oracles/blob/main/spec/spec.md
 ## Deployments
 
 ## Design Principles
- - Follow the spec
- - Standardized disclaimer with limits of each feed
- - Immutable contracts
- - Multiple overlapping oracles
- - Composition of IOracles
+
+- Follow the spec
+- Standardized disclaimer with limits of each feed
+- Immutable contracts
+- Multiple overlapping oracles
+- Composition of IOracles
 
 ## Contributing
+
 Please do. Open a PR.
 
+Remember to run the following two commands before pushing to conform to our coding style.
+
+```
+yarn prettier:write
+forge fmt
+```
+
 ## Security Considerations
-These contracts are unaudited. Please consider having them reviewed before integrating.
-Each contract includes a disclaimer with safe limits for operation. Please make sure they fit your use case.
+
+These contracts are unaudited. Please consider having them reviewed before integrating. Each contract includes a
+disclaimer with safe limits for operation. Please make sure they fit your use case.
 
 ## Usage
 

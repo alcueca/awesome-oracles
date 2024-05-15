@@ -2,11 +2,11 @@
 pragma solidity ^0.8.20;
 
 // types
-import {IOracle} from "../src/interfaces/IOracle.sol";
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
-import {IERC4626} from "forge-std/interfaces/IERC4626.sol";
+import { IOracle } from "../src/interfaces/IOracle.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
+import { IERC4626 } from "forge-std/interfaces/IERC4626.sol";
 // libraries
-import {BoringERC20} from "../src/libraries/BoringERC20.sol";
+import { BoringERC20 } from "../src/libraries/BoringERC20.sol";
 
 contract MockOracle is IOracle {
     struct Pair {
@@ -15,7 +15,7 @@ contract MockOracle is IOracle {
         uint8 quoteDecimals;
     }
 
-    mapping (address => mapping (address => Pair)) public pairs;
+    mapping(address => mapping(address => Pair)) public pairs;
 
     function setPair(address base, uint8 baseDecimals, address quote, uint8 quoteDecimals, uint256 ratio) public {
         pairs[base][quote] = Pair({ ratio: ratio, baseDecimals: baseDecimals, quoteDecimals: quoteDecimals });

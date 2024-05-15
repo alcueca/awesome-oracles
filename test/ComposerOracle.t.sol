@@ -2,14 +2,14 @@
 pragma solidity ^0.8.20;
 
 // types
-import {IOracle} from "../src/interfaces/IOracle.sol";
-import {IERC20} from "forge-std/interfaces/IERC20.sol";
+import { IOracle } from "../src/interfaces/IOracle.sol";
+import { IERC20 } from "forge-std/interfaces/IERC20.sol";
 // libraries
-import {console2} from "forge-std/Test.sol";
+import { console2 } from "forge-std/Test.sol";
 // contracts
-import {Test} from "forge-std/Test.sol";
-import {ComposerOracle} from "../src/composer/ComposerOracle.sol";
-import {MockOracle} from "./MockOracle.sol";
+import { Test } from "forge-std/Test.sol";
+import { ComposerOracle } from "../src/composer/ComposerOracle.sol";
+import { MockOracle } from "./MockOracle.sol";
 
 contract ComposerOracleTest is Test {
     // composer oracle
@@ -24,10 +24,10 @@ contract ComposerOracleTest is Test {
     address constant WETH = 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2;
 
     // raw chainlink prices at about block 19639105
-    uint256 constant DAI_WETH = 284796189987735;
-    uint256 constant WETH_DAI = 3511282928479716769792;
-    uint256 constant USDC_WETH = 284240453521380;
-    uint256 constant WETH_USDC = 3518148059;
+    uint256 constant DAI_WETH = 284_796_189_987_735;
+    uint256 constant WETH_DAI = 3_511_282_928_479_716_769_792;
+    uint256 constant USDC_WETH = 284_240_453_521_380;
+    uint256 constant WETH_USDC = 3_518_148_059;
 
     ComposerOracle.SetOracle[] setOracles;
     ComposerOracle.SetPath[] setPaths;
@@ -47,58 +47,54 @@ contract ComposerOracleTest is Test {
         roundtripPath.push(USDC);
         roundtripPath.push(WETH);
 
-        setOracles.push(ComposerOracle.SetOracle({
-            base: DAI,
-            quote: WETH,
-            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                oracle: chainlinkOracle,
-                baseDecimals: 18,
-                quoteDecimals: 18
+        setOracles.push(
+            ComposerOracle.SetOracle({
+                base: DAI,
+                quote: WETH,
+                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
+                    oracle: chainlinkOracle,
+                    baseDecimals: 18,
+                    quoteDecimals: 18
+                })
             })
-        }));
-        setOracles.push(ComposerOracle.SetOracle({
-            base: WETH,
-            quote: DAI,
-            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                oracle: chainlinkOracle,
-                baseDecimals: 18,
-                quoteDecimals: 18
+        );
+        setOracles.push(
+            ComposerOracle.SetOracle({
+                base: WETH,
+                quote: DAI,
+                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
+                    oracle: chainlinkOracle,
+                    baseDecimals: 18,
+                    quoteDecimals: 18
+                })
             })
-        }));
-        setOracles.push(ComposerOracle.SetOracle({
-            base: USDC,
-            quote: WETH,
-            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                oracle: chainlinkOracle,
-                baseDecimals: 6,
-                quoteDecimals: 18
+        );
+        setOracles.push(
+            ComposerOracle.SetOracle({
+                base: USDC,
+                quote: WETH,
+                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
+                    oracle: chainlinkOracle,
+                    baseDecimals: 6,
+                    quoteDecimals: 18
+                })
             })
-        }));
-        setOracles.push(ComposerOracle.SetOracle({
-            base: WETH,
-            quote: USDC,
-            oracleWithDecimals: ComposerOracle.OracleWithDecimals({
-                oracle: chainlinkOracle,
-                baseDecimals: 18,
-                quoteDecimals: 6
+        );
+        setOracles.push(
+            ComposerOracle.SetOracle({
+                base: WETH,
+                quote: USDC,
+                oracleWithDecimals: ComposerOracle.OracleWithDecimals({
+                    oracle: chainlinkOracle,
+                    baseDecimals: 18,
+                    quoteDecimals: 6
+                })
             })
-        }));
+        );
 
-        setPaths.push(ComposerOracle.SetPath({
-            base: DAI,
-            quote: USDC,
-            path: wethPath
-        }));
-        setPaths.push(ComposerOracle.SetPath({
-            base: USDC,
-            quote: DAI,
-            path: wethPath
-        }));
-        setPaths.push(ComposerOracle.SetPath({
-            base: DAI,
-            quote: DAI,
-            path: roundtripPath
-        }));
+        setPaths.push(ComposerOracle.SetPath({ base: DAI, quote: USDC, path: wethPath }));
+        setPaths.push(ComposerOracle.SetPath({ base: USDC, quote: DAI, path: wethPath }));
+        setPaths.push(ComposerOracle.SetPath({ base: DAI, quote: DAI, path: roundtripPath }));
 
         composerOracle = new ComposerOracle(setOracles, setPaths);
     }
@@ -167,7 +163,7 @@ contract ComposerOracleTest is Test {
 
     function testRoundtripValueOfOneUnit() public view {
         // price of one DAI whole unit, in terms of DAI, using multiple steps
-        assertEq(composerOracle.valueOf(DAI, DAI, 1e18), 999999_837147_677368);
+        assertEq(composerOracle.valueOf(DAI, DAI, 1e18), 999_999_837_147_677_368);
         // Value obtained experimentally, and explained by the loss of precision in the intermediate steps
     }
 

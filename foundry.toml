@@ -1,13 +1,50 @@
+# Full reference https://github.com/foundry-rs/foundry/tree/master/config
+
 [profile.default]
-src = "src"
-out = "out"
-libs = ["lib"]
-verbosity = 3
-solc_version = '0.8.20'
+  block_number = 19537700 # Mar-29-2024 05:52:47 AM +UTC
+  bytecode_hash = "none"
+  cbor_metadata = false
+  fuzz = { runs = 1_000 }
+  gas_reports = ["*"]
+  libs = ["lib"]
+  optimizer = true
+  optimizer_runs = 10_000
+  out = "out"
+  script = "script"
+  solc_version = "0.8.25"
+  src = "src"
+  test = "test"
+  evm_version = 'paris'
+  verbosity = 2
 
-# Testing
-block_number = 19537700 # Mar-29-2024 05:52:47 AM +UTC
+[profile.ci]
+  fuzz = { runs = 10_000 }
+  verbosity = 4
 
-# Define RPC urls as RPC_{ChainID}
+[etherscan]
+  arbitrum_one = { key = "${API_KEY_ARBISCAN}", chain = 42161 }
+  # avalanche = { key = "${API_KEY_SNOWTRACE}", chain = 43114 }
+  # bnb_smart_chain = { key = "${ API_KEY_BSCSCAN}", chain = 56 }
+  gnosis_chain = { key = "${API_KEY_GNOSISSCAN}", chain = 100 }
+  # goerli = { key = "${API_KEY_ETHERSCAN}", chain = 5 }
+  mainnet = { key = "${API_KEY_ETHERSCAN}", chain = 1 }
+  optimism = { key = "${API_KEY_OPTIMISTIC_ETHERSCAN}", chain = 10 }
+  polygon = { key = "${API_KEY_POLYGONSCAN}", chain = 137 }
+  # sepolia = { key = "${API_KEY_ETHERSCAN}", chain = 11155111 }
+
+[fmt]
+  bracket_spacing = true
+
 [rpc_endpoints]
-mainnet = "${RPC_1}" 
+  arbitrum_one = "${ARBITRUM_RPC}"
+  # avalanche = "${AVALANCHE_RPC}"
+  base = "${BASE_RPC}"
+  # bnb_smart_chain = "${BNB_RPC}"
+  gnosis = "${GNOSIS_RPC}"
+  # goerli = "${GOERLI_RPC}"
+  localhost = "http://127.0.0.1:8545"
+  mainnet = "${MAINNET_RPC}"
+  optimism = "${OPTIMISM_RPC}"
+  polygon = "${POLYGON_RPC}"
+  # sepolia = "${SEPOLIA_RPC}"
+

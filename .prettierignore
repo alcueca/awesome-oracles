@@ -1,20 +1,16 @@
 # directories
+broadcast
 cache
+lib
 node_modules
 out
-.idea
 
 # files
 *.env
-*.envrc
 *.log
 .DS_Store
 .pnp.*
 lcov.info
+package-lock.json
+pnpm-lock.yaml
 yarn.lock
-.secret
-
-# broadcasts
-!broadcast
-broadcast/*
-broadcast/*/31337/
