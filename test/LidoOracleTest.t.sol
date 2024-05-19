@@ -38,14 +38,14 @@ contract LidoOracleTest is Test {
         // value of given stETH amount, in terms of wstETH
         vm.assume(stETHAmount <= IERC20(STETH).totalSupply());
 
-        assertEq(lidoOracle.valueOf(STETH, WSTETH, stETHAmount), IWSTETH(WSTETH).getWstETHByStETH(stETHAmount));
+        assertEq(lidoOracle.getQuote(stETHAmount, STETH, WSTETH), IWSTETH(WSTETH).getWstETHByStETH(stETHAmount));
     }
 
     function testValueOfWstETH(uint256 wstETHAmount) public view {
         // value of given wstETH amount, in terms of stETH
         vm.assume(wstETHAmount <= IERC20(WSTETH).totalSupply());
 
-        assertEq(lidoOracle.valueOf(WSTETH, STETH, wstETHAmount), IWSTETH(WSTETH).getStETHByWstETH(wstETHAmount));
+        assertEq(lidoOracle.getQuote(wstETHAmount, WSTETH, STETH), IWSTETH(WSTETH).getStETHByWstETH(wstETHAmount));
     }
 
     function testInvalidArgs(address base, address quote, uint256 amt) public {
@@ -54,6 +54,6 @@ contract LidoOracleTest is Test {
         vm.assume(base != WSTETH || quote != STETH);
 
         vm.expectRevert(abi.encodeWithSelector(IOracle.OracleUnsupportedPair.selector, base, quote));
-        lidoOracle.valueOf(base, quote, amt);
+        lidoOracle.getQuote(amt, base, quote);
     }
 }

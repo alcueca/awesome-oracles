@@ -61,13 +61,13 @@ contract ComposerOracleTest is Test {
 
     function testMockOracles() public view {
         // price of one DAI whole unit, in terms of ETH
-        assertEq(chainlinkOracle.valueOf(DAI, WETH, 1e18), DAI_WETH);
+        assertEq(chainlinkOracle.getQuote(1e18, DAI, WETH), DAI_WETH);
         // price of one WETH whole unit, in terms of DAI
-        assertEq(chainlinkOracle.valueOf(WETH, DAI, 1e18), WETH_DAI);
+        assertEq(chainlinkOracle.getQuote(1e18, WETH, DAI), WETH_DAI);
         // price of one USDC whole unit, in terms of ETH
-        assertEq(chainlinkOracle.valueOf(USDC, WETH, 1e6), USDC_WETH);
+        assertEq(chainlinkOracle.getQuote(1e6, USDC, WETH), USDC_WETH);
         // price of one WETH whole unit, in terms of USDC
-        assertEq(chainlinkOracle.valueOf(WETH, USDC, 1e18), WETH_USDC);
+        assertEq(chainlinkOracle.getQuote(1e18, WETH, USDC), WETH_USDC);
     }
 
     function testComposerOracleOracles() public view {
@@ -83,43 +83,43 @@ contract ComposerOracleTest is Test {
 
     function testDirectValueOfOneUnit() public view {
         // price of one DAI whole unit, in terms of ETH
-        assertEq(composerOracle.valueOf(DAI, WETH, 1e18), DAI_WETH);
+        assertEq(composerOracle.getQuote(1e18, DAI, WETH), DAI_WETH);
         // price of one WETH whole unit, in terms of DAI
-        assertEq(composerOracle.valueOf(WETH, DAI, 1e18), WETH_DAI);
+        assertEq(composerOracle.getQuote(1e18, WETH, DAI), WETH_DAI);
         // price of one USDC whole unit, in terms of ETH
-        assertEq(composerOracle.valueOf(USDC, WETH, 1e6), USDC_WETH);
+        assertEq(composerOracle.getQuote(1e6, USDC, WETH), USDC_WETH);
         // price of one WETH whole unit, in terms of USDC
-        assertEq(composerOracle.valueOf(WETH, USDC, 1e18), WETH_USDC);
+        assertEq(composerOracle.getQuote(1e18, WETH, USDC), WETH_USDC);
     }
 
     function testFuzzDirectValueOf(uint64 amount) public view {
         // price of one DAI whole unit, in terms of ETH
-        assertEq(composerOracle.valueOf(DAI, WETH, amount), amount * DAI_WETH / 1e18);
+        assertEq(composerOracle.getQuote(amount, DAI, WETH), amount * DAI_WETH / 1e18);
         // price of one WETH whole unit, in terms of DAI
-        assertEq(composerOracle.valueOf(WETH, DAI, amount), amount * WETH_DAI / 1e18);
+        assertEq(composerOracle.getQuote(amount, WETH, DAI), amount * WETH_DAI / 1e18);
         // price of one USDC whole unit, in terms of ETH
-        assertEq(composerOracle.valueOf(USDC, WETH, amount), amount * USDC_WETH / 1e6);
+        assertEq(composerOracle.getQuote(amount, USDC, WETH), amount * USDC_WETH / 1e6);
         // price of one WETH whole unit, in terms of USDC
-        assertEq(composerOracle.valueOf(WETH, USDC, amount), amount * WETH_USDC / 1e18);
+        assertEq(composerOracle.getQuote(amount, WETH, USDC), amount * WETH_USDC / 1e18);
     }
 
     function testPathValueOfOneUnit() public view {
         // price of one DAI whole unit, in terms of USDC
-        assertEq(composerOracle.valueOf(DAI, USDC, 1e18), DAI_WETH * WETH_USDC / 1e18);
+        assertEq(composerOracle.getQuote(1e18, DAI, USDC), DAI_WETH * WETH_USDC / 1e18);
         // price of one USDC whole unit, in terms of DAI
-        assertEq(composerOracle.valueOf(USDC, DAI, 1e6), USDC_WETH * WETH_DAI / 1e18);
+        assertEq(composerOracle.getQuote(1e6, USDC, DAI), USDC_WETH * WETH_DAI / 1e18);
     }
 
     function testFuzzPathValueOf(uint64 amount) public view {
         // price of one DAI whole unit, in terms of USDC
-        assertEq(composerOracle.valueOf(DAI, USDC, amount), (((amount * DAI_WETH) / 1e18) * WETH_USDC) / 1e18);
+        assertEq(composerOracle.getQuote(amount, DAI, USDC), (((amount * DAI_WETH) / 1e18) * WETH_USDC) / 1e18);
         // price of one USDC whole unit, in terms of DAI
-        assertEq(composerOracle.valueOf(USDC, DAI, amount), (((amount * USDC_WETH) / 1e6) * WETH_DAI) / 1e18);
+        assertEq(composerOracle.getQuote(amount, USDC, DAI), (((amount * USDC_WETH) / 1e6) * WETH_DAI) / 1e18);
     }
 
     function testRoundtripValueOfOneUnit() public view {
         // price of one DAI whole unit, in terms of DAI, using multiple steps
-        assertEq(composerOracle.valueOf(DAI, DAI, 1e18), 999_999_837_147_677_368);
+        assertEq(composerOracle.getQuote(1e18, DAI, DAI), 999_999_837_147_677_368);
         // Value obtained experimentally, and explained by the loss of precision in the intermediate steps
     }
 }
