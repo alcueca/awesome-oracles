@@ -99,8 +99,8 @@ There are no events defined in this specification
 
 ### Rationale
 
-The use of `getQuote` doesn't require the consumer to be aware of any decimal partitions that might have been defined for
-the `base` or `quote` and should be preferred in most data processing cases.
+The use of `getQuote` doesn't require the consumer to be aware of any decimal partitions that might have been defined
+for the `base` or `quote` and should be preferred in most data processing cases.
 
 The spec doesn't include a `getPrice` function because it is rarely needed on-chain, and it would be a decimal number of
 difficult representation. The popular option for representing prices can be implemented for ERC20 with decimals as
