@@ -20,9 +20,9 @@ interface IOracle {
     /// pair.
     /// MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly
     /// specified.
+    /// @param baseAmount The amount of `base` to convert.
     /// @param base The asset that the user needs to know the value for.
     /// @param quote The asset in which the user needs to value the base.
-    /// @param baseAmount The amount of `base` to convert.
     /// @return quoteAmount The value of `baseAmount` of `base` in `quote` terms
-    function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount);
+    function getQuote(uint256 baseAmount, address base, address quote) external view returns (uint256 quoteAmount);
 }

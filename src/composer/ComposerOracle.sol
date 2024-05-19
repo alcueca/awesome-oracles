@@ -69,12 +69,8 @@ contract ComposerOracle is IOracle {
         }
     }
 
-    /// @notice Convert amountBase base into quote at the latest oracle price, through a path is exists.
-    /// @param base base token
-    /// @param quote quote token
-    /// @param amountBase Amount of base to convert to quote
-    /// @return amountQuote Amount of quote token converted from base
-    function valueOf(address base, address quote, uint256 amountBase)
+    /// @inheritdoc IOracle
+    function getQuote(uint256 amountBase, address base, address quote)
         external
         view
         virtual
@@ -119,6 +115,6 @@ contract ComposerOracle is IOracle {
     {
         IOracle oracle = oracles[base][quote];
         if (address(oracle) == address(0)) revert OracleUnsupportedPair(base, quote);
-        amountQuote = oracle.valueOf(base, quote, amountBase);
+        amountQuote = oracle.getQuote(amountBase, base, quote);
     }
 }
