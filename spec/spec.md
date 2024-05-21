@@ -23,7 +23,8 @@ integration and serving the needs of product teams with less knowledge, requirem
 - quote asset: The asset in which the user needs to value the `base` (e.g: ETH as in "I need to know the value of 1e6
   USDC in ETH terms").
 - value: An amount of `base` in `quote` terms (e.g. The `value` of 1000e6 USDC in ETH terms is 283,969,794,427,307,000
-  ETH, and the `value` of 1000e18 ETH in USDC terms is 3,521,501,299,000 USDC).
+  ETH, and the `value` of 1000e18 ETH in USDC terms is 3,521,501,299,000 USDC). Note that this is an asset amount, and
+  not a decimal factor.
 
 ### Methods
 
