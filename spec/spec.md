@@ -105,7 +105,7 @@ for the `base` or `quote` and should be preferred in most data processing cases.
 
 The spec doesn't include a `getPrice` function because it is rarely needed on-chain, and it would be a decimal number of
 difficult representation. The popular option for representing prices can be implemented for ERC20 with decimals as
-`oracle.valueOf(base, quote, 10\*\*base.decimals()) and will give the value of a whole unit of base in quote terms.
+`oracle.quoteOf(base, quote, 10\*\*base.decimals()) and will give the value of a whole unit of base in quote terms.
 
 ### Backwards Compatibility
 
