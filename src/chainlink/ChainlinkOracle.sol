@@ -31,7 +31,7 @@ contract ChainlinkOracle is IOracle {
     }
 
     /// @inheritdoc IOracle
-    function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256) {
+    function getQuote(uint256 baseAmount, address base, address quote) external view returns (uint256) {
         bool isForward = _getQueryDirection(base, quote);
         uint256 answer = _getAnswer(base, quote);
 
@@ -39,18 +39,6 @@ contract ChainlinkOracle is IOracle {
             return (baseAmount * answer * 1e18) / (NUMERATOR_SCALAR * FEED_SCALAR);
         } else {
             return (baseAmount * 1e18 * FEED_SCALAR) / (answer * DENOMINATOR_SCALAR);
-        }
-    }
-
-    /// @inheritdoc IOracle
-    function priceOf(address base, address quote) external view returns (uint256) {
-        bool isForward = _getQueryDirection(base, quote);
-        uint256 answer = _getAnswer(base, quote);
-
-        if (isForward) {
-            return answer * 1e18 / FEED_SCALAR;
-        } else {
-            return FEED_SCALAR * 1e18 / answer;
         }
     }
 
