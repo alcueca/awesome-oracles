@@ -28,7 +28,7 @@ integration and serving the needs of product teams with less knowledge, requirem
 
 ### Methods
 
-#### valueOf
+#### getQuote
 
 Returns the value of `baseAmount` of `base` in `quote` terms.
 
@@ -39,17 +39,17 @@ MUST revert with `OracleUnsupportedPair` if not capable to provide data for the 
 MUST revert with `OracleUntrustedData` if not capable to provide data within a degree of confidence publicly specified.
 
 ```yaml
-- name: valueOf
+- name: getQuote
   type: function
   stateMutability: view
 
   inputs:
+    - name: baseAmount
+      type: uint256
     - name: base
       type: address
     - name: quote
       type: address
-    - name: baseAmount
-      type: uint256
 
   outputs:
     - name: quoteAmount
@@ -100,10 +100,10 @@ There are no events defined in this specification
 
 ### Rationale
 
-The use of `valueOf` doesn't require the consumer to be aware of any decimal partitions that might have been defined for
-the `base` or `quote` and should be preferred in most data processing cases.
+The use of `getQuote` doesn't require the consumer to be aware of any decimal partitions that might have been defined
+for the `base` or `quote` and should be preferred in most data processing cases.
 
-The spec doesn't include a `priceOf` function because it is rarely needed on-chain, and it would be a decimal number of
+The spec doesn't include a `getPrice` function because it is rarely needed on-chain, and it would be a decimal number of
 difficult representation. The popular option for representing prices can be implemented for ERC20 with decimals as
 `oracle.valueOf(base, quote, 10\*\*base.decimals()) and will give the value of a whole unit of base in quote terms.
 

@@ -23,12 +23,8 @@ contract ERC4626Oracle is IOracle {
         ASSET = IERC20(VAULT.asset());
     }
 
-    /// @notice Returns the value of baseAmount of baseAsset in quoteAsset terms.
-    /// @param base The asset that the user needs to know the value for.
-    /// @param quote The asset in which the user needs to value the `base`.
-    /// @param baseAmount The amount of `base` that the user wants to know the value in `quote` for.
-    /// @return quoteAmount The amount of `quote` that has the same value as `baseAmount`.
-    function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256 quoteAmount) {
+    /// @inheritdoc IOracle
+    function getQuote(uint256 baseAmount, address base, address quote) external view returns (uint256 quoteAmount) {
         if (base == address(ASSET) && quote == address(VAULT)) {
             // value of given underlying asset tokens, in terms of vault shares
             return VAULT.convertToShares(baseAmount);

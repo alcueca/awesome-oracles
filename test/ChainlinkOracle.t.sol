@@ -44,12 +44,12 @@ contract ChainlinkOracleTest is Test {
     }
 
     function testValueOfForward() public view {
-        assertApproxEqRel(usdcEthOracle.valueOf(USDC, WETH, 3200e6), 1e18, 0.05e18);
-        assertApproxEqRel(ethUsdOracle.valueOf(WETH, Denominations.USD, 2e18), 6400e18, 0.05e18);
+        assertApproxEqRel(usdcEthOracle.getQuote(3200e6, USDC, WETH), 1e18, 0.05e18);
+        assertApproxEqRel(ethUsdOracle.getQuote(2e18, WETH, Denominations.USD), 6400e18, 0.05e18);
     }
 
     function testValueOfReverse() public view {
-        assertApproxEqRel(usdcEthOracle.valueOf(WETH, USDC, 2e18), 6400e18, 0.05e18);
-        assertApproxEqRel(ethUsdOracle.valueOf(Denominations.USD, WETH, 3200e18), 1e18, 0.05e18);
+        assertApproxEqRel(usdcEthOracle.getQuote(2e18, WETH, USDC), 6400e18, 0.05e18);
+        assertApproxEqRel(ethUsdOracle.getQuote(3200e18, Denominations.USD, WETH), 1e18, 0.05e18);
     }
 }

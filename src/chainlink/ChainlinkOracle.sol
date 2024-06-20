@@ -31,7 +31,7 @@ contract ChainlinkOracle is IOracle {
     }
 
     /// @inheritdoc IOracle
-    function valueOf(address base, address quote, uint256 baseAmount) external view returns (uint256) {
+    function getQuote(uint256 baseAmount, address base, address quote) external view returns (uint256) {
         bool isForward = _getQueryDirection(base, quote);
         uint256 answer = _getAnswer(base, quote);
 

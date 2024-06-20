@@ -54,9 +54,9 @@ contract ERC4626OracleTest is Test {
         vm.assume(usdcAmt <= IERC4626(yUSDC).totalSupply());
         vm.assume(wethAmt <= IERC4626(yWETH).totalSupply());
 
-        assertEq(yDaiOracle.valueOf(yDAI, DAI, daiAmt), IERC4626(yDAI).convertToAssets(daiAmt));
-        assertEq(yUsdcOracle.valueOf(yUSDC, USDC, usdcAmt), IERC4626(yUSDC).convertToAssets(usdcAmt));
-        assertEq(yWethOracle.valueOf(yWETH, WETH, wethAmt), IERC4626(yWETH).convertToAssets(wethAmt));
+        assertEq(yDaiOracle.getQuote(daiAmt, yDAI, DAI), IERC4626(yDAI).convertToAssets(daiAmt));
+        assertEq(yUsdcOracle.getQuote(usdcAmt, yUSDC, USDC), IERC4626(yUSDC).convertToAssets(usdcAmt));
+        assertEq(yWethOracle.getQuote(wethAmt, yWETH, WETH), IERC4626(yWETH).convertToAssets(wethAmt));
     }
 
     function testValueOfAssets(uint256 daiAmt, uint256 usdcAmt, uint256 wethAmt) public view {
@@ -65,8 +65,8 @@ contract ERC4626OracleTest is Test {
         vm.assume(usdcAmt <= IERC4626(yUSDC).totalAssets());
         vm.assume(wethAmt <= IERC4626(yWETH).totalAssets());
 
-        assertEq(yDaiOracle.valueOf(DAI, yDAI, daiAmt), IERC4626(yDAI).convertToShares(daiAmt));
-        assertEq(yUsdcOracle.valueOf(USDC, yUSDC, usdcAmt), IERC4626(yUSDC).convertToShares(usdcAmt));
-        assertEq(yWethOracle.valueOf(WETH, yWETH, wethAmt), IERC4626(yWETH).convertToShares(wethAmt));
+        assertEq(yDaiOracle.getQuote(daiAmt, DAI, yDAI), IERC4626(yDAI).convertToShares(daiAmt));
+        assertEq(yUsdcOracle.getQuote(usdcAmt, USDC, yUSDC), IERC4626(yUSDC).convertToShares(usdcAmt));
+        assertEq(yWethOracle.getQuote(wethAmt, WETH, yWETH), IERC4626(yWETH).convertToShares(wethAmt));
     }
 }
