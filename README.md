@@ -33,6 +33,10 @@ forge fmt
 These contracts are unaudited. Please consider having them reviewed before integrating. Each contract includes a
 disclaimer with safe limits for operation. Please make sure they fit your use case.
 
+## Other Compatible Oracles
+
+Check [euler-price-oracle](https://github.com/euler-xyz/euler-price-oracle) for more compatible oracles.
+
 ## Usage
 
 ### Build
