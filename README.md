@@ -1,15 +1,14 @@
-# Oracle Aggregator
+# Awesome Oracles
 
-The Oracle Aggregator is a series of immutable smart contracts that provide data feeds from existing smart contracts
-with a consistent interface and behaviour.
+Despite their critical role in DeFi, oracles are often poorly understood by developers and users. The goal of Awesome Oracles is to rectify that.
 
-## Specification
+1. [Oracles](#erc-7226-oracles): Example [ERC-7726](https://ethereum-magicians.org/t/erc-7726-common-quote-oracle/20351) integrations of popular oracles. More about the standard in the [specification](./spec/spec.md) and the accompanying [discussion thread](https://ethereum-magicians.org/t/erc-7726-common-quote-oracle/20351).
 
-https://github.com/alcueca/oracles/blob/main/spec/spec.md
+1. [Resources](#resources): A curated collection of high-signal educational resources about blockchain oracles.
 
-## Deployments
+## ERC-7226 Oracles
 
-## Design Principles
+### Design Principles
 
 - Follow the spec
 - Standardized disclaimer with limits of each feed
@@ -17,7 +16,7 @@ https://github.com/alcueca/oracles/blob/main/spec/spec.md
 - Multiple overlapping oracles
 - Composition of IOracles
 
-## Contributing
+### Contributing
 
 Please do. Open a PR.
 
@@ -28,7 +27,7 @@ yarn prettier:write
 forge fmt
 ```
 
-## Security Considerations
+### Security Considerations
 
 These contracts are unaudited. Please consider having them reviewed before integrating. Each contract includes a
 disclaimer with safe limits for operation. Please make sure they fit your use case.
@@ -57,34 +56,13 @@ $ forge test
 $ forge fmt
 ```
 
-### Gas Snapshots
+## Resources
 
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+- [Oracle Risk and Security Standards: An Introduction (Pt. 1)](https://chaoslabs.xyz/posts/oracle-risk-and-security-standards-an-introduction)
+- [Oracle Risk and Security Standards: Network Architectures and Topologies (Pt. 2)](https://chaoslabs.xyz/posts/oracle-risk-and-security-standards-network-architectures-and-topologies-pt-2)
+- [Oracle Risk and Security Standards: Price Composition Methodologies (Pt. 3)](https://chaoslabs.xyz/posts/oracle-price-composition-methodologies)
+- [Euler Price Oracles Whitepaper](https://github.com/euler-xyz/euler-price-oracle/blob/master/docs/whitepaper.md)
+- [Oracle Risk Assessment: RedStone](https://hackmd.io/@PrismaRisk/RedStone)
+- [The oracle conundrum](https://www.liquity.org/blog/the-oracle-conundrum)
+- [Alternative Prisma Oracles Comparative Analysis](https://hackmd.io/@PrismaRisk/AlternativeOracles)
+- [Getting Prices Right](https://hackernoon.com/getting-prices-right)
