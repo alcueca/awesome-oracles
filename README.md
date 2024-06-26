@@ -21,9 +21,15 @@ Oracles is to rectify that.
 
 ### Contributing
 
-Please do. Open a PR.
+Please do. Open a PR. Some things that are always welcome:
+ - Add content to this README
+ - Fixes to existing oracle adapters
+ - Better descriptions on when the existing oracle adapters can be trusted
+ - Audits for existing oracle adapters
+ - Deployment addresses for ERC-7726 oracle adapters
+ - New ERC-7726 oracle adapters
 
-Remember to run the following two commands before pushing to conform to our coding style.
+Please remember to run the following two commands before pushing to conform to our coding style.
 
 ```
 yarn prettier:write
