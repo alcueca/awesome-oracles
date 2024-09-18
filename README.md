@@ -3,11 +3,10 @@
 Despite their critical role in DeFi, oracles are often poorly understood by developers and users. The goal of Awesome
 Oracles is to rectify that.
 
-1. [Oracles](#erc-7226-oracles): Example [ERC-7726](https://ethereum-magicians.org/t/erc-7726-common-quote-oracle/20351)
-   integrations of popular oracles. More about the standard in the [specification](./spec/spec.md) and the accompanying
-   [discussion thread](https://ethereum-magicians.org/t/erc-7726-common-quote-oracle/20351).
+1. [Oracles](#erc-7226-oracles): Example [ERC-7726](https://eips.ethereum.org/EIPS/eip-7726)
+   integrations of popular oracles.
 
-1. [Resources](#resources): A curated collection of high-signal educational resources about blockchain oracles.
+2. [Resources](#resources): A curated collection of high-signal educational resources about blockchain oracles.
 
 ## ERC-7226 Oracles
 
